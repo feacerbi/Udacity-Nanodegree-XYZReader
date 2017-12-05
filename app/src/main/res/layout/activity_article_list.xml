@@ -7,17 +7,11 @@
     android:fitsSystemWindows="false"
     tools:context=".ui.ArticleListActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="112dp"
             android:fitsSystemWindows="true"
-            app:expanded="true"
             android:theme="@style/Theme.Bacon.AppBarOverlay">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -38,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="bottom"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:layout_collapseMode="pin">
 
                     <ImageView
@@ -54,7 +49,8 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -62,6 +58,5 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
         </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

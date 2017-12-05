@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -100,11 +101,16 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                         Bitmap bitmap = imageContainer.getBitmap();
                         if (bitmap != null) {
-                            Palette p = Palette.generate(bitmap, 12);
-                            int mutedColor = p.getDarkMutedColor(0xFF333333);
+                            Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(@NonNull Palette palette) {
+                                    int mutedColor = palette.getDarkMutedColor(0xFF333333);
 
-                            holder.titleView.setBackgroundColor(mutedColor);
-                            holder.subtitleView.setBackgroundColor(mutedColor);
+                                    holder.titleView.setBackgroundColor(mutedColor);
+                                    holder.subtitleView.setBackgroundColor(mutedColor);
+
+                                }
+                            });
                         }
                     }
 
