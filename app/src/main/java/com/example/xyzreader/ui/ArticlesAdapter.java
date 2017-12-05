@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -21,7 +20,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -91,9 +89,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
 
         String photoUrl = mCursor.getString(ArticleLoader.Query.THUMB_URL);
 
-        Picasso.with(context)
-                .load(photoUrl)
-                .into(holder.thumbnailView);
+        holder.thumbnailView.setImageUrl(
+                mCursor.getString(ArticleLoader.Query.THUMB_URL),
+                ImageLoaderHelper.getInstance(context).getImageLoader());
+        holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
 
         ImageLoaderHelper.getInstance(context).getImageLoader()
                 .get(photoUrl, new ImageLoader.ImageListener() {
@@ -127,7 +126,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView thumbnailView;
+        DynamicHeightNetworkImageView thumbnailView;
         TextView titleView;
         TextView subtitleView;
 
